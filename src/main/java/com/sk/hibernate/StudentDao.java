@@ -1,11 +1,11 @@
 package com.sk.hibernate;
 
+import java.util.List;
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
 
 import com.sk.beans.Student;
 
@@ -16,19 +16,12 @@ import com.sk.beans.Student;
  *
  */
 public class StudentDao {
-	private static SessionFactory factory;
-	private static ServiceRegistry registry;
+	private static SessionFactory factory = HibernateUtil.getFactory();
 
 	/**
 	 * Constructor for Hibernate.
 	 */
 	public StudentDao() {
-		Configuration cfg = new Configuration();
-		cfg.configure("hibernate.cfg.xml");
-		cfg.addAnnotatedClass(Student.class);
-		// cfg.addResource("Student.hbm.xml");
-		registry = new StandardServiceRegistryBuilder().applySettings(cfg.getProperties()).build();
-		factory = cfg.buildSessionFactory(registry);
 	}
 
 	/**
@@ -65,12 +58,34 @@ public class StudentDao {
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			session.save(student);
+			session.update(student);
 			tx.commit();
 		} catch (Exception e) {
 
 		} finally {
 			session.close();
 		}
+	}
+
+	/**
+	 * Fetch all student.
+	 * 
+	 * @return list
+	 */
+	public List getAllStudent() {
+		Session session = factory.openSession();
+		Transaction tx = null;
+		List list = null;
+		try {
+			tx = session.beginTransaction();
+			Query query = session.createQuery("From Student");
+			list = query.list();
+			tx.commit();
+		} catch (Exception e) {
+
+		} finally {
+			session.close();
+		}
+		return list;
 	}
 }
