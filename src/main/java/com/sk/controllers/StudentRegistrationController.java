@@ -1,28 +1,49 @@
 package com.sk.controllers;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.sk.beans.Student;
 import com.sk.beans.StudentRegistration;
-import com.sk.beans.StudentRegistrationReply;
 
-@Controller
+@RestController
 public class StudentRegistrationController {
 
+	@Autowired(required = true)
+	com.sk.hibernate.StudentDao test;
+
+	@Autowired
+	Student student;
+
+	/**
+	 * Add Student.
+	 * 
+	 * @param student
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/add")
 	@ResponseBody
-	public StudentRegistrationReply registerStudent(@RequestBody Student student) {
+	public Student addStudent(@RequestBody Student student) {
 		System.out.println("in register student");
-		StudentRegistrationReply reply = new StudentRegistrationReply();
-		reply.setId(student.getId());
-		reply.setName(student.getName());
-		// reply.setRegId(student.getId());
-		reply.setRegStatus("Success");
 		StudentRegistration.getInstance().add(student);
-		return reply;
+		test.inserStudent(student);
+		return student;
+	}
+
+	@RequestMapping("/enter")
+	@ResponseBody
+	public String addStudent() {
+		return "Hello There";
+	}
+
+	@RequestMapping(method = RequestMethod.PUT, value = "student/update")
+	@ResponseBody
+	public String updateStudent(@RequestBody Student student) {
+		System.out.println("in update student");
+		return StudentRegistration.getInstance().updateStudent(student);
 	}
 }
