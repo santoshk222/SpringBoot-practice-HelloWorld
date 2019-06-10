@@ -8,7 +8,6 @@ import org.hibernate.service.ServiceRegistry;
 import com.sk.beans.Student;
 
 /**
- * 
  * Hibernate utilities.
  * 
  * @author santosh Korade
