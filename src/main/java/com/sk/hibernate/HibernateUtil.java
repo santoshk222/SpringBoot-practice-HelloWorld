@@ -5,6 +5,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import com.sk.beans.Address;
 import com.sk.beans.Student;
 
 /**
@@ -21,6 +22,8 @@ public class HibernateUtil {
 		Configuration cfg = new Configuration();
 		cfg.configure("hibernate.cfg.xml");
 		cfg.addAnnotatedClass(Student.class);
+		cfg.addAnnotatedClass(Address.class);
+		// cfg.addAnnotatedClass(Teacher.class);
 		// cfg.addResource("Student.hbm.xml");
 		registry = new StandardServiceRegistryBuilder().applySettings(cfg.getProperties()).build();
 		factory = cfg.buildSessionFactory(registry);

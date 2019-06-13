@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Jun 6, 2019 11:16:50 PM by Hibernate Tools 3.5.0.Final -->
+<!-- Generated Jun 13, 2019 10:18:14 PM by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping>
     <class name="com.sk.beans.Student" table="STUDENT">
         <id name="id" type="int">
@@ -11,8 +11,6 @@
         <property name="name" type="java.lang.String">
             <column name="NAME" />
         </property>
-        <property name="address" type="java.lang.String">
-            <column name="ADDRESS" />
-        </property>
+        <one-to-one name="address" class="com.sk.beans.Address"></one-to-one>
     </class>
 </hibernate-mapping>

@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Student {
@@ -11,7 +12,13 @@ public class Student {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	int id;
 	String name;
-	String address;
+
+	@OneToOne
+	Address address;
+
+	public Student(Address address) {
+		this.address = address;
+	}
 
 	public int getId() {
 		return id;
@@ -29,11 +36,11 @@ public class Student {
 		this.name = name;
 	}
 
-	public String getAddress() {
+	public Address getAddress() {
 		return address;
 	}
 
-	public void setAddress(String address) {
+	public void setAddress(Address address) {
 		this.address = address;
 	}
 

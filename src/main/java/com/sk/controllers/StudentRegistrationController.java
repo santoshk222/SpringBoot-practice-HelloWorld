@@ -5,24 +5,24 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.sk.beans.Student;
 
-@Controller
+@RestController
 @RequestMapping("/student")
 public class StudentRegistrationController {
 
 	Logger logger = LoggerFactory.getLogger(StudentRegistrationController.class);
 
-	@Autowired(required = true)
+	@Autowired(required = false)
 	com.sk.hibernate.StudentDao test;
 
-	@Autowired
+	@Autowired(required = false)
 	Student student;
 
 	final String ADD = "add";
@@ -39,12 +39,12 @@ public class StudentRegistrationController {
 	@ResponseBody
 	public Student addStudent(@RequestBody Student student) {
 		logger.debug("add student");
+		// student.setAddress(address);
 		test.inserStudent(student);
 		return student;
 	}
 
 	@RequestMapping("/enter")
-	@ResponseBody
 	public String entersutduent() {
 		logger.debug("ener");
 		System.out.println("Enter");
